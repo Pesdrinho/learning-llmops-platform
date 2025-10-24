@@ -1,0 +1,97 @@
+[
+  {
+    "term": "LLMOps",
+    "shortDef": "Large Language Model Operations",
+    "longDef": "Práticas, processos e ferramentas para operacionalizar e gerenciar o ciclo de vida completo de sistemas baseados em modelos de linguagem grandes, desde desenvolvimento até produção.",
+    "sources": ["https://example.com"]
+  },
+  {
+    "term": "RAG",
+    "shortDef": "Retrieval-Augmented Generation",
+    "longDef": "Arquitetura que combina recuperação de informações com geração de texto, onde documentos relevantes são buscados e fornecidos como contexto ao LLM para produzir respostas mais precisas e atualizadas.",
+    "sources": ["https://example.com"]
+  },
+  {
+    "term": "Embedding",
+    "shortDef": "Representação vetorial de texto",
+    "longDef": "Representação numérica (vetor) de texto que captura significado semântico, permitindo cálculo de similaridade entre documentos e queries.",
+    "sources": ["https://example.com"]
+  },
+  {
+    "term": "Vector Database",
+    "shortDef": "Banco de dados de vetores",
+    "longDef": "Sistema de armazenamento otimizado para buscar e recuperar vetores (embeddings) com base em similaridade semântica, usando algoritmos como ANN (Approximate Nearest Neighbors).",
+    "sources": ["https://example.com"]
+  },
+  {
+    "term": "Prompt Engineering",
+    "shortDef": "Design e otimização de prompts",
+    "longDef": "Prática de criar e refinar instruções (prompts) para LLMs de forma a obter respostas mais precisas, consistentes e alinhadas com objetivos específicos.",
+    "sources": ["https://example.com"]
+  },
+  {
+    "term": "Fine-tuning",
+    "shortDef": "Ajuste fino de modelo",
+    "longDef": "Processo de treinar um modelo pré-treinado com dados específicos do domínio para especializar seu comportamento e melhorar performance em tarefas específicas.",
+    "sources": ["https://example.com"]
+  },
+  {
+    "term": "Hallucination",
+    "shortDef": "Alucinação",
+    "longDef": "Fenômeno onde LLMs geram informações factualmente incorretas ou inventadas com confiança, apresentando-as como verdades.",
+    "sources": ["https://example.com"]
+  },
+  {
+    "term": "Chunking",
+    "shortDef": "Segmentação de documentos",
+    "longDef": "Processo de dividir documentos longos em pedaços (chunks) menores para indexação e recuperação mais eficiente em sistemas RAG.",
+    "sources": ["https://example.com"]
+  },
+  {
+    "term": "Faithfulness",
+    "shortDef": "Fidelidade à fonte",
+    "longDef": "Métrica que avalia se as respostas geradas pelo LLM são consistentes e baseadas nos documentos de contexto fornecidos, sem adicionar informações não suportadas.",
+    "sources": ["https://example.com"]
+  },
+  {
+    "term": "Recall@k",
+    "shortDef": "Taxa de recuperação top-k",
+    "longDef": "Métrica que mede a proporção de documentos relevantes recuperados entre os k primeiros resultados de uma busca.",
+    "sources": ["https://example.com"]
+  },
+  {
+    "term": "Context Window",
+    "shortDef": "Janela de contexto",
+    "longDef": "Quantidade máxima de tokens que um LLM pode processar de uma vez, incluindo prompt e resposta. Modelos modernos variam de 4k a 200k+ tokens.",
+    "sources": ["https://example.com"]
+  },
+  {
+    "term": "Token",
+    "shortDef": "Unidade de texto processada",
+    "longDef": "Unidade básica de processamento em LLMs, geralmente correspondendo a ~4 caracteres em inglês ou uma palavra parcial. Usado para medir custos e limites de contexto.",
+    "sources": ["https://example.com"]
+  },
+  {
+    "term": "Agent",
+    "shortDef": "Agente LLM",
+    "longDef": "Sistema que usa LLM como motor de decisão para executar tarefas complexas, podendo usar ferramentas, acessar APIs e realizar múltiplas ações sequenciais.",
+    "sources": ["https://example.com"]
+  },
+  {
+    "term": "Observability",
+    "shortDef": "Observabilidade",
+    "longDef": "Capacidade de medir e entender o comportamento interno de sistemas LLM através de logs, métricas e traces, permitindo debugging e otimização.",
+    "sources": ["https://example.com"]
+  },
+  {
+    "term": "Prompt Template",
+    "shortDef": "Template de prompt",
+    "longDef": "Estrutura reutilizável de prompt com placeholders para variáveis, permitindo consistência e manutenibilidade em aplicações LLM.",
+    "sources": ["https://example.com"]
+  }
+]
+
+
+
+
+
