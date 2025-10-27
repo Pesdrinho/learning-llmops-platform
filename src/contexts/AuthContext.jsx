@@ -27,8 +27,18 @@ export function AuthProvider({ children }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    // Verificar se o Firebase está disponível
+    if (!auth) {
+      console.warn('⚠️ Firebase Auth não disponível - modo offline');
+      setLoading(false);
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
+      setLoading(false);
+    }, (error) => {
+      console.error('Erro no AuthStateChanged:', error);
       setLoading(false);
     });
 
@@ -39,6 +49,11 @@ export function AuthProvider({ children }) {
   const signUp = async (email, password, displayName) => {
     try {
       setError(null);
+      
+      if (!auth) {
+        throw new Error('Firebase Auth não disponível');
+      }
+      
       const result = await createUserWithEmailAndPassword(auth, email, password);
       
       if (displayName) {
@@ -57,6 +72,11 @@ export function AuthProvider({ children }) {
   const signIn = async (email, password) => {
     try {
       setError(null);
+      
+      if (!auth) {
+        throw new Error('Firebase Auth não disponível');
+      }
+      
       const result = await signInWithEmailAndPassword(auth, email, password);
       return { success: true, user: result.user };
     } catch (error) {
@@ -70,6 +90,11 @@ export function AuthProvider({ children }) {
   const signInWithGoogle = async () => {
     try {
       setError(null);
+      
+      if (!auth) {
+        throw new Error('Firebase Auth não disponível');
+      }
+      
       const provider = new GoogleAuthProvider();
       provider.setCustomParameters({
         prompt: 'select_account',
@@ -87,6 +112,11 @@ export function AuthProvider({ children }) {
   const signOut = async () => {
     try {
       setError(null);
+      
+      if (!auth) {
+        throw new Error('Firebase Auth não disponível');
+      }
+      
       await firebaseSignOut(auth);
       return { success: true };
     } catch (error) {
@@ -100,6 +130,11 @@ export function AuthProvider({ children }) {
   const resetPassword = async (email) => {
     try {
       setError(null);
+      
+      if (!auth) {
+        throw new Error('Firebase Auth não disponível');
+      }
+      
       await sendPasswordResetEmail(auth, email);
       return { success: true };
     } catch (error) {

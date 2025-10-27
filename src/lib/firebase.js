@@ -24,17 +24,26 @@ if (!isConfigured) {
   );
 }
 
-// Inicializa Firebase
+// Inicializa Firebase com tratamento de erro mais robusto
 let app;
 let auth;
 let db;
 
 try {
-  app = initializeApp(firebaseConfig);
-  auth = getAuth(app);
-  db = getFirestore(app);
+  if (isConfigured) {
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+    console.log('✅ Firebase inicializado com sucesso');
+  } else {
+    console.warn('⚠️ Firebase não inicializado - variáveis de ambiente ausentes');
+  }
 } catch (error) {
-  console.error('Erro ao inicializar Firebase:', error);
+  console.error('❌ Erro ao inicializar Firebase:', error);
+  // Em caso de erro, criar objetos mock para evitar quebra da aplicação
+  app = null;
+  auth = null;
+  db = null;
 }
 
 export { app, auth, db };
