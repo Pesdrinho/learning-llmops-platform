@@ -30,10 +30,30 @@ jobs:
         run: |
           gcloud auth configure-docker
 
+      - name: Fetch secrets from Secret Manager
+        id: secrets
+        run: |
+          # Função para buscar secret
+          fetch_secret() { gcloud secrets versions access latest --secret="$1"; }
+
+          echo "VITE_FIREBASE_API_KEY=$(fetch_secret VITE_FIREBASE_API_KEY)" >> $GITHUB_ENV
+          echo "VITE_FIREBASE_AUTH_DOMAIN=$(fetch_secret VITE_FIREBASE_AUTH_DOMAIN)" >> $GITHUB_ENV
+          echo "VITE_FIREBASE_PROJECT_ID=$(fetch_secret VITE_FIREBASE_PROJECT_ID)" >> $GITHUB_ENV
+          echo "VITE_FIREBASE_STORAGE_BUCKET=$(fetch_secret VITE_FIREBASE_STORAGE_BUCKET)" >> $GITHUB_ENV
+          echo "VITE_FIREBASE_MESSAGING_SENDER_ID=$(fetch_secret VITE_FIREBASE_MESSAGING_SENDER_ID)" >> $GITHUB_ENV
+          echo "VITE_FIREBASE_APP_ID=$(fetch_secret VITE_FIREBASE_APP_ID)" >> $GITHUB_ENV
+
       - name: Build Docker image
         run: |
-          docker build -t gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA \
-                       -t gcr.io/$PROJECT_ID/$SERVICE_NAME:latest .
+          docker build \
+            --build-arg VITE_FIREBASE_API_KEY="$VITE_FIREBASE_API_KEY" \
+            --build-arg VITE_FIREBASE_AUTH_DOMAIN="$VITE_FIREBASE_AUTH_DOMAIN" \
+            --build-arg VITE_FIREBASE_PROJECT_ID="$VITE_FIREBASE_PROJECT_ID" \
+            --build-arg VITE_FIREBASE_STORAGE_BUCKET="$VITE_FIREBASE_STORAGE_BUCKET" \
+            --build-arg VITE_FIREBASE_MESSAGING_SENDER_ID="$VITE_FIREBASE_MESSAGING_SENDER_ID" \
+            --build-arg VITE_FIREBASE_APP_ID="$VITE_FIREBASE_APP_ID" \
+            -t gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA \
+            -t gcr.io/$PROJECT_ID/$SERVICE_NAME:latest .
 
       - name: Push Docker image to GCR
         run: |

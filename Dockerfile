@@ -14,8 +14,22 @@ RUN npm ci
 # Copiar código fonte
 COPY . .
 
-# Copiar variáveis de ambiente para o build
-COPY .env .env
+# Args de build para injetar variáveis do Vite (vindas do Secret Manager via CI)
+ARG VITE_FIREBASE_API_KEY
+ARG VITE_FIREBASE_AUTH_DOMAIN
+ARG VITE_FIREBASE_PROJECT_ID
+ARG VITE_FIREBASE_STORAGE_BUCKET
+ARG VITE_FIREBASE_MESSAGING_SENDER_ID
+ARG VITE_FIREBASE_APP_ID
+
+# Gerar .env.production temporário apenas para o build (não persiste na imagem final)
+RUN printf "VITE_FIREBASE_API_KEY=%s\nVITE_FIREBASE_AUTH_DOMAIN=%s\nVITE_FIREBASE_PROJECT_ID=%s\nVITE_FIREBASE_STORAGE_BUCKET=%s\nVITE_FIREBASE_MESSAGING_SENDER_ID=%s\nVITE_FIREBASE_APP_ID=%s\n" \
+  "$VITE_FIREBASE_API_KEY" \
+  "$VITE_FIREBASE_AUTH_DOMAIN" \
+  "$VITE_FIREBASE_PROJECT_ID" \
+  "$VITE_FIREBASE_STORAGE_BUCKET" \
+  "$VITE_FIREBASE_MESSAGING_SENDER_ID" \
+  "$VITE_FIREBASE_APP_ID" > .env.production
 
 # Build da aplicação
 RUN npm run build
