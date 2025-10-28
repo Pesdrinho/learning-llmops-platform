@@ -2,7 +2,7 @@
 
 /**
  * Script de verificação de arquivos para troubleshooting
- * Execute com: node check-files.cjs
+ * Execute com: node scripts/check-files.js
  */
 
 import fs from 'fs';
@@ -137,4 +137,5 @@ if (!allFilesExist) {
   console.log('2. npm install');
   console.log('3. npm run dev\n');
 }
+
 

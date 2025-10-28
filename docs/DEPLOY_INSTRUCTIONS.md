@@ -258,9 +258,9 @@ gcloud run services update-traffic learning-llmops-platform \
 
 ## Recursos Adicionais
 
-- [Documentação Cloud Run](https://cloud.google.com/run/docs)
-- [GitHub Actions para GCP](https://github.com/google-github-actions)
-- [Melhores Práticas Cloud Run](https://cloud.google.com/run/docs/best-practices)
+- Documentação Cloud Run: https://cloud.google.com/run/docs
+- GitHub Actions para GCP: https://github.com/google-github-actions
+- Melhores Práticas Cloud Run: https://cloud.google.com/run/docs/best-practices
 
 ## Segurança
 
@@ -284,5 +284,6 @@ Em caso de dúvidas ou problemas:
 ---
 
 **Última atualização:** 2025-01-22
+
 
 

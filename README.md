@@ -377,6 +377,8 @@ npm run build
 - [Firebase](https://firebase.google.com/docs)
 - [React Router](https://reactrouter.com/)
 - [Framer Motion](https://www.framer.com/motion/)
+ - Documentação de Deploy (Cloud Run): `docs/DEPLOY_INSTRUCTIONS.md`
+ - Sumário de Implementação: `docs/IMPLEMENTATION_SUMMARY.md`
 
 ## 🤝 Contribuindo
 
