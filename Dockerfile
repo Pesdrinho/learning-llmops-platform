@@ -15,7 +15,7 @@ RUN npm ci
 COPY . .
 
 # Copiar variáveis de ambiente para o build
-COPY .env.local .env.local
+COPY .env .env
 
 # Build da aplicação
 RUN npm run build

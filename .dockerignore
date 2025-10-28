@@ -6,10 +6,6 @@ npm-debug.log
 dist
 build
 
-# Environment files
-.env
-.env.*.local
-
 # Git
 .git
 .gitignore
