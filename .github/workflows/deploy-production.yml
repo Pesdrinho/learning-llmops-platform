@@ -9,6 +9,8 @@ env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   SERVICE_NAME: learning-llmops-platform
   REGION: ${{ secrets.GCP_REGION }}
+  ARTIFACT_REPO: llmops-platform
+  REGISTRY_HOST: us-docker.pkg.dev
 
 jobs:
   deploy:
@@ -26,9 +28,9 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           export_default_credentials: true
 
-      - name: Configure Docker for GCR
+      - name: Configure Docker for Artifact Registry
         run: |
-          gcloud auth configure-docker
+          gcloud auth configure-docker $REGISTRY_HOST
 
       - name: Fetch secrets from Secret Manager
         id: secrets
@@ -52,18 +54,18 @@ jobs:
             --build-arg VITE_FIREBASE_STORAGE_BUCKET="$VITE_FIREBASE_STORAGE_BUCKET" \
             --build-arg VITE_FIREBASE_MESSAGING_SENDER_ID="$VITE_FIREBASE_MESSAGING_SENDER_ID" \
             --build-arg VITE_FIREBASE_APP_ID="$VITE_FIREBASE_APP_ID" \
-            -t gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA \
-            -t gcr.io/$PROJECT_ID/$SERVICE_NAME:latest .
+            -t $REGISTRY_HOST/$PROJECT_ID/$ARTIFACT_REPO/$SERVICE_NAME:$GITHUB_SHA \
+            -t $REGISTRY_HOST/$PROJECT_ID/$ARTIFACT_REPO/$SERVICE_NAME:latest .
 
-      - name: Push Docker image to GCR
+      - name: Push Docker image to Artifact Registry
         run: |
-          docker push gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
-          docker push gcr.io/$PROJECT_ID/$SERVICE_NAME:latest
+          docker push $REGISTRY_HOST/$PROJECT_ID/$ARTIFACT_REPO/$SERVICE_NAME:$GITHUB_SHA
+          docker push $REGISTRY_HOST/$PROJECT_ID/$ARTIFACT_REPO/$SERVICE_NAME:latest
 
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy $SERVICE_NAME \
-            --image gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA \
+            --image $REGISTRY_HOST/$PROJECT_ID/$ARTIFACT_REPO/$SERVICE_NAME:$GITHUB_SHA \
             --platform managed \
             --region $REGION \
             --allow-unauthenticated \
