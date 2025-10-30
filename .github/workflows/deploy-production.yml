@@ -21,29 +21,38 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Authenticate to GCP using the official auth action (recommended)
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      # Install Cloud SDK (keeps setup-gcloud to ensure gcloud CLI is available)
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
         with:
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
           project_id: ${{ secrets.GCP_PROJECT_ID }}
+          # Do NOT pass service_account_key here since auth@v1 already provided credentials.
           export_default_credentials: true
 
-      - name: Activate service account
+      # Debug: show active account (safe: prints only account email, not credentials)
+      - name: Verify gcloud authentication
+        env:
+          CLOUDSDK_CORE_DISABLE_PROMPTS: "1"
         run: |
-          echo "${{ secrets.GCP_SA_KEY }}" > "${HOME}/gcloud.json"
-          gcloud auth activate-service-account --key-file="${HOME}/gcloud.json"
-          gcloud config set project "${{ secrets.GCP_PROJECT_ID }}"
+          gcloud auth list --filter=status:ACTIVE --format="value(account)" || (echo "No active account" && exit 1)
+          gcloud config set project "${{ secrets.GCP_PROJECT_ID }}" || exit 1
 
       - name: Configure Docker for Artifact Registry
         run: |
-          gcloud auth configure-docker $REGISTRY_HOST
+          gcloud auth configure-docker $REGISTRY_HOST --quiet
 
       - name: Fetch secrets from Secret Manager
         id: secrets
         run: |
           # Função para buscar secret
           fetch_secret() { gcloud secrets versions access latest --secret="$1"; }
-
+  
           echo "VITE_FIREBASE_API_KEY=$(fetch_secret VITE_FIREBASE_API_KEY)" >> $GITHUB_ENV
           echo "VITE_FIREBASE_AUTH_DOMAIN=$(fetch_secret VITE_FIREBASE_AUTH_DOMAIN)" >> $GITHUB_ENV
           echo "VITE_FIREBASE_PROJECT_ID=$(fetch_secret VITE_FIREBASE_PROJECT_ID)" >> $GITHUB_ENV
@@ -96,5 +105,3 @@ jobs:
           sleep 10
           curl -f $SERVICE_URL/health || exit 1
           echo "✓ Deployment successful and healthy!"
-
-
