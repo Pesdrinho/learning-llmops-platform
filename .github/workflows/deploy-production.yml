@@ -10,7 +10,7 @@ env:
   SERVICE_NAME: learning-llmops-platform
   REGION: ${{ secrets.GCP_REGION }}
   ARTIFACT_REPO: llmops-platform
-  REGISTRY_HOST: us-docker.pkg.dev
+  REGISTRY_HOST: us-central1-docker.pkg.dev
 
 jobs:
   deploy:
