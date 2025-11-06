@@ -43,9 +43,11 @@ export default function Blog() {
                 <Card key={post.slug} className="overflow-hidden transition-shadow hover:shadow-lg">
                   {post.image && (
                     <div className="aspect-video w-full overflow-hidden bg-muted">
-                      <div className="flex h-full items-center justify-center text-muted-foreground">
-                        [Imagem do Post]
-                      </div>
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        className="h-full w-full object-cover"
+                      />
                     </div>
                   )}
                   <CardHeader>
