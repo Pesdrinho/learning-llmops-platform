@@ -82,6 +82,12 @@ export default function BlogPost() {
           <div className="grid gap-12 lg:grid-cols-[1fr_250px]">
             {/* Main Content */}
             <div className="mdx-content max-w-none space-y-8">
+              {/* Imagem de capa (opcional) */}
+              {post.image && (
+                <div className="aspect-video w-full overflow-hidden rounded-lg bg-muted">
+                  <img src={post.image} alt={post.title} className="h-full w-full object-cover" />
+                </div>
+              )}
               {/* Seção de Público-Alvo */}
               {post.audiencia && (
                 <AudienceSection
@@ -129,7 +135,3 @@ export default function BlogPost() {
     </>
   );
 }
-
-
-
-
