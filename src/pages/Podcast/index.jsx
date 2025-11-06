@@ -6,50 +6,14 @@ import SEO from '@components/SEO';
 import Container from '@components/layout/Container';
 import { formatDate } from '@lib/utils';
 import { Calendar, Clock, Play, Headphones } from 'lucide-react';
+import { getEpisodiosOrdenados } from '@data/podcastEpisodes';
 
 /**
  * Página de lista de episódios do Podcast
  */
 export default function Podcast() {
-  // Mock data
-  const episodes = [
-    {
-      slug: 'ep01-fundamentos-llmops',
-      numero: 1,
-      titulo: 'Fundamentos de LLMOps: Por onde começar?',
-      descricao:
-        'Uma conversa introdutória sobre LLMOps, diferenças para MLOps tradicional e os principais desafios ao implementar sistemas LLM em produção.',
-      data: '2025-01-20',
-      duracao: '45:30',
-      temas: ['fundamentos', 'introdução', 'mlops'],
-      convidado: 'Dr. João Silva',
-      thumbnail: '/images/podcast/ep01.jpg',
-    },
-    {
-      slug: 'ep02-rag-profundidade',
-      numero: 2,
-      titulo: 'RAG em Profundidade: Da Teoria à Prática',
-      descricao:
-        'Exploramos Retrieval-Augmented Generation, desde conceitos básicos até implementações avançadas, incluindo embedding models, vector databases e estratégias de chunking.',
-      data: '2025-01-13',
-      duracao: '52:15',
-      temas: ['rag', 'arquitetura', 'embeddings'],
-      convidado: 'Maria Santos',
-      thumbnail: '/images/podcast/ep02.jpg',
-    },
-    {
-      slug: 'ep03-metricas-avaliacao',
-      numero: 3,
-      titulo: 'Métricas e Avaliação: Como medir qualidade de LLMs',
-      descricao:
-        'Discutimos métricas essenciais para sistemas LLM: recall@k, faithfulness, relevância, latência e custo. Quando usar cada uma e como estabelecer baselines.',
-      data: '2025-01-06',
-      duracao: '38:45',
-      temas: ['métricas', 'avaliação', 'monitoramento'],
-      convidado: 'Pedro Oliveira',
-      thumbnail: '/images/podcast/ep03.jpg',
-    },
-  ];
+  // Carrega episódios ordenados do mais recente para o mais antigo
+  const episodes = getEpisodiosOrdenados();
 
   return (
     <>
@@ -80,11 +44,19 @@ export default function Podcast() {
         {/* Último episódio (Featured) */}
         {episodes[0] && (
           <Card className="mb-12 overflow-hidden border-2 border-primary/20">
-            <div className="grid gap-6 md:grid-cols-2">
-              <div className="aspect-video md:aspect-square overflow-hidden bg-muted">
-                <div className="flex h-full items-center justify-center text-muted-foreground">
-                  [Thumbnail do Episódio]
-                </div>
+            <div className="grid gap-6 grid-cols-[300px_1fr] md:grid-cols-[350px_1fr]">
+              <div className="w-full h-48 overflow-hidden bg-muted rounded-lg m-4">
+                {episodes[0].thumbnail ? (
+                  <img
+                    src={episodes[0].thumbnail}
+                    alt={episodes[0].titulo}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center text-muted-foreground">
+                    [Thumbnail do Episódio]
+                  </div>
+                )}
               </div>
               <div className="flex flex-col justify-center p-6 md:pr-12">
                 <Badge className="mb-3 w-fit">Último episódio</Badge>
@@ -120,9 +92,17 @@ export default function Podcast() {
             {episodes.map((episode) => (
               <Card key={episode.slug} className="flex flex-col overflow-hidden transition-shadow hover:shadow-lg">
                 <div className="aspect-video overflow-hidden bg-muted">
-                  <div className="flex h-full items-center justify-center text-muted-foreground">
-                    [Thumbnail]
-                  </div>
+                  {episode.thumbnail ? (
+                    <img
+                      src={episode.thumbnail}
+                      alt={episode.titulo}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-full items-center justify-center text-muted-foreground">
+                      [Sem imagem]
+                    </div>
+                  )}
                 </div>
                 <CardHeader className="flex-1">
                   <div className="mb-2 flex items-center gap-2">

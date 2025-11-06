@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import { Badge } from '@components/ui/badge';
 import { Button } from '@components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@components/ui/card';
@@ -10,6 +10,7 @@ import Transcript from '@components/media/Transcript';
 import AudienceSection from '@components/AudienceSection';
 import { formatDate } from '@lib/utils';
 import { Calendar, Clock, User, ArrowLeft, ExternalLink } from 'lucide-react';
+import { getEpisodePorSlug } from '@data/podcastEpisodes';
 
 /**
  * Página de episódio individual do Podcast
@@ -17,74 +18,16 @@ import { Calendar, Clock, User, ArrowLeft, ExternalLink } from 'lucide-react';
 export default function Episode() {
   const { slug } = useParams();
   
+  // Busca episódio por slug
+  const episode = getEpisodePorSlug(slug);
+
+  // Redireciona se episódio não existe
+  if (!episode) {
+    return <Navigate to="/podcast" replace />;
+  }
+  
   // Feature flag para transcrição (mantida para ativação futura)
   const showTranscript = false;
-
-  // Mock data
-  const episode = {
-    numero: 1,
-    titulo: 'Fundamentos de LLMOps: Por onde começar?',
-    descricao:
-      'Uma conversa introdutória sobre LLMOps, diferenças para MLOps tradicional e os principais desafios ao implementar sistemas LLM em produção.',
-    data: '2025-01-20',
-    duracao: '45:30',
-    temas: ['fundamentos', 'introdução', 'mlops'],
-    convidado: {
-      nome: 'Dr. João Silva',
-      cargo: 'Principal ML Engineer',
-      empresa: 'TechCorp',
-      linkedin: 'https://linkedin.com',
-    },
-    audioUrl: 'https://example.com/podcast/ep01.mp3', // Placeholder
-    audiencia: {
-      publicoAlvo: 'Engenheiros de software, cientistas de dados e profissionais transitando para área de IA/ML',
-      objetivosAprendizado: [
-        'Compreender os fundamentos de LLMOps',
-        'Identificar diferenças entre MLOps tradicional e LLMOps',
-        'Reconhecer principais desafios em produção',
-        'Conhecer primeiros passos práticos para começar',
-      ],
-      tempoEstimado: '45 min',
-    },
-    notas: [
-      {
-        tempo: '00:00',
-        descricao: 'Introdução e apresentação do convidado',
-      },
-      {
-        tempo: '05:30',
-        descricao: 'O que é LLMOps e por que é importante',
-      },
-      {
-        tempo: '15:20',
-        descricao: 'Diferenças entre MLOps e LLMOps',
-      },
-      {
-        tempo: '25:40',
-        descricao: 'Principais desafios em produção',
-      },
-      {
-        tempo: '35:15',
-        descricao: 'Recomendações e por onde começar',
-      },
-      {
-        tempo: '42:00',
-        descricao: 'Perguntas da comunidade',
-      },
-    ],
-    recursosRelacionados: [
-      {
-        titulo: 'Guia: Descoberta & Definição',
-        link: '/guia/descoberta',
-        tipo: 'Guia',
-      },
-      {
-        titulo: 'Blog: Introdução ao LLMOps',
-        link: '/blog/introducao-llmops',
-        tipo: 'Artigo',
-      },
-    ],
-  };
 
   const transcriptContent = `
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt 
