@@ -176,9 +176,4 @@ export default function MarkdownContent({ content }) {
     >
       {content}
     </ReactMarkdown>
-  );
-}
-
-
-
-
+  )}

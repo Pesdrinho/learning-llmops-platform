@@ -52,8 +52,8 @@ export default function Arquiteturas() {
 
   const nivelIcons = {
     iniciante: '🟢',
-    intermediario: '🟡',
-    avancado: '🔴',
+    intermediário: '🟡',
+    avançado: '🔴',
   };
 
   return (
@@ -83,8 +83,8 @@ export default function Arquiteturas() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="iniciante">Iniciante</SelectItem>
-                  <SelectItem value="intermediario">Intermediário</SelectItem>
-                  <SelectItem value="avancado">Avançado</SelectItem>
+                  <SelectItem value="intermediário">Intermediário</SelectItem>
+                  <SelectItem value="avançado">Avançado</SelectItem>
                 </SelectContent>
               </Select>
 
@@ -94,7 +94,7 @@ export default function Arquiteturas() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="baixo">Baixo</SelectItem>
-                  <SelectItem value="medio">Médio</SelectItem>
+                  <SelectItem value="médio">Médio</SelectItem>
                   <SelectItem value="alto">Alto</SelectItem>
                 </SelectContent>
               </Select>

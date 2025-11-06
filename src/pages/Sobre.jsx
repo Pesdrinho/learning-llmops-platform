@@ -37,10 +37,18 @@ export default function Sobre() {
         <Container className="py-16">
           <div className="grid gap-8 md:grid-cols-[auto_1fr] items-start">
             {/* Foto */}
-            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-red-500 to-orange-600 p-1">
-              <div className="w-full h-full rounded-full bg-muted flex items-center justify-center text-6xl font-bold text-muted-foreground">
-                {portifolio.hero.nome.split(' ').map(n => n[0]).join('')}
-              </div>
+            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-red-500 to-orange-600 p-1 overflow-hidden">
+              {portifolio.hero.foto ? (
+                <img
+                  src={portifolio.hero.foto}
+                  alt={portifolio.hero.nome}
+                  className="w-full h-full rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full rounded-full bg-muted flex items-center justify-center text-6xl font-bold text-muted-foreground">
+                  {portifolio.hero.nome.split(' ').map(n => n[0]).join('')}
+                </div>
+              )}
             </div>
 
             {/* Info */}
@@ -75,12 +83,14 @@ export default function Sobre() {
                     GitHub
                   </a>
                 </Button>
-                <Button asChild size="sm" variant="outline">
-                  <a href={portifolio.hero.twitter} target="_blank" rel="noopener noreferrer">
-                    <Twitter className="mr-2 h-4 w-4" />
-                    Twitter
-                  </a>
-                </Button>
+                {/* {portifolio.hero.twitter && (
+                  <Button asChild size="sm" variant="outline">
+                    <a href={portifolio.hero.twitter} target="_blank" rel="noopener noreferrer">
+                      <Twitter className="mr-2 h-4 w-4" />
+                      Twitter
+                    </a>
+                  </Button>
+                )} */}
               </div>
             </div>
           </div>
