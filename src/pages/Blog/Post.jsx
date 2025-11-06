@@ -85,7 +85,7 @@ export default function BlogPost() {
               {/* Imagem de capa (opcional) */}
               {post.image && (
                 <div className="aspect-video w-full overflow-hidden rounded-lg bg-muted">
-                  <img src={post.image} alt={post.title} className="h-full w-full object-cover" />
+                  <img src={post.image} alt={post.title} className="h-full w-full object-cover" />   
                 </div>
               )}
               {/* Seção de Público-Alvo */}
@@ -135,3 +135,4 @@ export default function BlogPost() {
     </>
   );
 }
+
