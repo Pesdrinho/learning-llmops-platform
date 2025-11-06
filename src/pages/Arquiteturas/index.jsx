@@ -52,8 +52,8 @@ export default function Arquiteturas() {
 
   const nivelIcons = {
     iniciante: '🟢',
-    intermediario: '🟡',
-    avancado: '🔴',
+    intermediário: '🟡',
+    avançado: '🔴',
   };
 
   return (
