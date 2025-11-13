@@ -20,18 +20,34 @@ export const macroEtapas = {
       {
         pergunta: 'Qual problema de negócio estamos resolvendo com LLMs?',
         orientacao: 'Seja específico e mensurável. Evite objetivos vagos como "melhorar experiência". Prefira "reduzir tempo médio de resposta em 40% mantendo qualidade acima de 90%".',
+        ferramentas: [
+          { nome: 'Confluence', funcionalidade: 'Documentar business case e requisitos', url: 'https://www.atlassian.com/software/confluence' },
+          { nome: 'Miro', funcionalidade: 'Mapear jornadas e problemas', url: 'https://miro.com' },
+          { nome: 'Notion', funcionalidade: 'Centralizar planejamento e documentação', url: 'https://www.notion.so' },
+        ],
       },
       {
         pergunta: 'Quais são os requisitos de compliance e privacidade?',
         orientacao: 'Identifique LGPD/GDPR, regulações de setor (financeiro, saúde), políticas de dados sensíveis e requisitos de auditoria.',
+        ferramentas: [
+          { nome: 'Confluence', funcionalidade: 'Documentar políticas de governança', url: 'https://www.atlassian.com/software/confluence' },
+          { nome: 'JIRA', funcionalidade: 'Rastrear requisitos de compliance', url: 'https://www.atlassian.com/software/jira' },
+        ],
       },
       {
         pergunta: 'Qual o orçamento e prazo esperados?',
         orientacao: 'Defina custos de infraestrutura, APIs de LLM, recursos humanos e prazos realistas para MVP e produção.',
+        ferramentas: [
+          { nome: 'JIRA', funcionalidade: 'Planejar sprints e entregas', url: 'https://www.atlassian.com/software/jira' },
+          { nome: 'Notion', funcionalidade: 'Controlar orçamento e recursos', url: 'https://www.notion.so' },
+        ],
       },
       {
         pergunta: 'Como vamos medir o sucesso?',
         orientacao: 'Estabeleça métricas de negócio (ROI, NPS, redução de custo) e técnicas (latência, acurácia, taxa de fallback).',
+        ferramentas: [
+          { nome: 'Confluence', funcionalidade: 'Definir KPIs e métricas de sucesso', url: 'https://www.atlassian.com/software/confluence' },
+        ],
       },
     ],
     entregas: [
@@ -74,6 +90,26 @@ export const macroEtapas = {
       ],
       tempoEstimado: '25-30 min',
     },
+    conteudosExternos: [
+      {
+        type: 'youtube',
+        title: 'LLMOps: Building Production-Ready AI Systems',
+        description: 'Visão geral sobre como estruturar sistemas LLMOps em produção',
+        author: 'DeepLearning.AI',
+        url: 'https://www.youtube.com/watch?v=example1',
+        duration: '15 min',
+        tags: ['estratégia', 'produção'],
+      },
+      {
+        type: 'article',
+        title: 'AI Governance Framework: Best Practices',
+        description: 'Framework completo para governança de IA e compliance',
+        author: 'Stanford HAI',
+        url: 'https://hai.stanford.edu/ai-governance',
+        duration: '10 min',
+        tags: ['governança', 'compliance'],
+      },
+    ],
     proximaEtapa: {
       slug: 'preprocessamento-dados',
       titulo: 'Pré-processamento dos Dados',
@@ -96,18 +132,33 @@ export const macroEtapas = {
       {
         pergunta: 'Quais dados são necessários e onde estão armazenados?',
         orientacao: 'Mapeie fontes internas (banco de dados, documentos, logs) e externas (APIs, web scraping). Avalie volume, variedade e velocidade.',
+        ferramentas: [
+          { nome: 'Apache Airflow', funcionalidade: 'Orquestrar pipelines de coleta', url: 'https://airflow.apache.org' },
+          { nome: 'Prefect', funcionalidade: 'Workflows modernos de ETL', url: 'https://www.prefect.io' },
+        ],
       },
       {
         pergunta: 'Como garantir qualidade e remover viés nos dados?',
         orientacao: 'Implemente validação de qualidade, detecção de duplicatas, análise de viés demográfico e representatividade.',
+        ferramentas: [
+          { nome: 'Great Expectations', funcionalidade: 'Validação e qualidade de dados', url: 'https://greatexpectations.io' },
+          { nome: 'Pandas', funcionalidade: 'Análise exploratória e limpeza', url: 'https://pandas.pydata.org' },
+        ],
       },
       {
         pergunta: 'Há dados sensíveis que precisam ser anonimizados?',
         orientacao: 'Identifique PII (nome, CPF, email), dados médicos ou financeiros. Aplique técnicas de mascaramento, tokenização ou pseudonimização.',
+        ferramentas: [
+          { nome: 'Pandas', funcionalidade: 'Transformação e anonimização', url: 'https://pandas.pydata.org' },
+        ],
       },
       {
         pergunta: 'Qual estratégia de chunking para RAG ou formatação para fine-tuning?',
         orientacao: 'Para RAG: defina tamanho de chunks (512-1024 tokens) e overlap. Para fine-tuning: formate em pares pergunta-resposta ou completion.',
+        ferramentas: [
+          { nome: 'Pandas', funcionalidade: 'Processamento de texto estruturado', url: 'https://pandas.pydata.org' },
+          { nome: 'Apache Spark', funcionalidade: 'Processamento distribuído em larga escala', url: 'https://spark.apache.org' },
+        ],
       },
     ],
     entregas: [
@@ -145,6 +196,26 @@ export const macroEtapas = {
       ],
       tempoEstimado: '30-35 min',
     },
+    conteudosExternos: [
+      {
+        type: 'youtube',
+        title: 'Data Preprocessing for LLMs',
+        description: 'Técnicas práticas de pré-processamento de dados para modelos de linguagem',
+        author: 'Hugging Face',
+        url: 'https://www.youtube.com/watch?v=example2',
+        duration: '20 min',
+        tags: ['ETL', 'NLP'],
+      },
+      {
+        type: 'paper',
+        title: 'Best Practices in Data Cleaning for NLP',
+        description: 'Paper acadêmico sobre técnicas de limpeza de dados textuais',
+        author: 'ACL 2023',
+        url: 'https://arxiv.org/abs/example',
+        duration: '30 min',
+        tags: ['pesquisa', 'qualidade'],
+      },
+    ],
     proximaEtapa: {
       slug: 'engenharia-modelo-treinamento',
       titulo: 'Engenharia de Modelo para Treinamento',
@@ -167,18 +238,35 @@ export const macroEtapas = {
       {
         pergunta: 'Qual modelo base usar: proprietário (GPT, Claude) ou open-source (Llama, Mistral)?',
         orientacao: 'Considere: custo, latência, privacidade de dados, customização necessária e infraestrutura disponível.',
+        ferramentas: [
+          { nome: 'HuggingFace', funcionalidade: 'Explorar e testar modelos open-source', url: 'https://huggingface.co' },
+          { nome: 'OpenAI API', funcionalidade: 'Acesso a modelos GPT', url: 'https://platform.openai.com' },
+          { nome: 'Anthropic Claude', funcionalidade: 'Modelos Claude via API', url: 'https://www.anthropic.com' },
+        ],
       },
       {
         pergunta: 'Fine-tuning completo ou PEFT (LoRA/QLoRA)?',
         orientacao: 'Fine-tuning completo: maior controle, mais recursos. PEFT: eficiente, rápido, menor custo. Use PEFT quando possível.',
+        ferramentas: [
+          { nome: 'PEFT', funcionalidade: 'LoRA e QLoRA para fine-tuning eficiente', url: 'https://github.com/huggingface/peft' },
+          { nome: 'Axolotl', funcionalidade: 'Framework simplificado para fine-tuning', url: 'https://github.com/OpenAccess-AI-Collective/axolotl' },
+        ],
       },
       {
         pergunta: 'Como avaliar qualidade do modelo durante treinamento?',
         orientacao: 'Use métricas como perplexity, BLEU/ROUGE para texto, e métricas customizadas do domínio. Valide em conjunto de teste representativo.',
+        ferramentas: [
+          { nome: 'W&B', funcionalidade: 'Tracking de experimentos e métricas', url: 'https://wandb.ai' },
+          { nome: 'MLflow', funcionalidade: 'Gerenciar experimentos e modelos', url: 'https://mlflow.org' },
+        ],
       },
       {
         pergunta: 'Qual infraestrutura de treinamento?',
         orientacao: 'Cloud (Vertex AI, SageMaker) para escalabilidade ou on-premise para dados sensíveis. Considere GPUs (A100, H100) para modelos grandes.',
+        ferramentas: [
+          { nome: 'PyTorch', funcionalidade: 'Framework de treinamento', url: 'https://pytorch.org' },
+          { nome: 'DeepSpeed', funcionalidade: 'Otimização de treinamento distribuído', url: 'https://www.deepspeed.ai' },
+        ],
       },
     ],
     entregas: [
@@ -238,18 +326,34 @@ export const macroEtapas = {
       {
         pergunta: 'Qual engine de serving usar?',
         orientacao: 'vLLM: melhor throughput e baixa latência. TGI: HuggingFace integration. Triton: multi-framework. Ray Serve: distribuído.',
+        ferramentas: [
+          { nome: 'vLLM', funcionalidade: 'Serving otimizado com PagedAttention', url: 'https://github.com/vllm-project/vllm' },
+          { nome: 'TGI', funcionalidade: 'Text Generation Inference HuggingFace', url: 'https://github.com/huggingface/text-generation-inference' },
+          { nome: 'Triton', funcionalidade: 'Servidor multi-framework NVIDIA', url: 'https://github.com/triton-inference-server' },
+          { nome: 'Ray Serve', funcionalidade: 'Serving distribuído escalável', url: 'https://docs.ray.io/en/latest/serve' },
+        ],
       },
       {
         pergunta: 'Como otimizar para latência vs throughput?',
         orientacao: 'Latência: reduza batch, use quantização. Throughput: aumente batch, use continuous batching (vLLM), considere múltiplas replicas.',
+        ferramentas: [
+          { nome: 'vLLM', funcionalidade: 'Continuous batching automático', url: 'https://github.com/vllm-project/vllm' },
+        ],
       },
       {
         pergunta: 'Quantização e otimização: quais técnicas aplicar?',
         orientacao: 'INT8/INT4 quantization, GPTQ, AWQ para reduzir memória. Flash Attention, PagedAttention para velocidade.',
+        ferramentas: [
+          { nome: 'vLLM', funcionalidade: 'PagedAttention e quantização integrada', url: 'https://github.com/vllm-project/vllm' },
+        ],
       },
       {
         pergunta: 'Como lidar com picos de tráfego e garantir disponibilidade?',
         orientacao: 'Autoscaling horizontal, rate limiting, queue management, fallback para modelos mais leves ou respostas cached.',
+        ferramentas: [
+          { nome: 'LiteLLM', funcionalidade: 'Gateway com fallback e load balancing', url: 'https://github.com/BerriAI/litellm' },
+          { nome: 'Kubernetes', funcionalidade: 'Orquestração e autoscaling', url: 'https://kubernetes.io' },
+        ],
       },
     ],
     entregas: [
@@ -309,18 +413,36 @@ export const macroEtapas = {
       {
         pergunta: 'Quais métricas são críticas para o negócio?',
         orientacao: 'Latência (p50, p95, p99), taxa de erro, custo por requisição, taxa de fallback, satisfação do usuário (thumbs up/down).',
+        ferramentas: [
+          { nome: 'Prometheus', funcionalidade: 'Coleta de métricas de sistema', url: 'https://prometheus.io' },
+          { nome: 'Grafana', funcionalidade: 'Visualização em dashboards', url: 'https://grafana.com' },
+        ],
       },
       {
         pergunta: 'Como detectar e prevenir degradação de qualidade?',
         orientacao: 'Monitor de hallucination, toxicity scores, semantic similarity com golden answers, A/B testing contínuo.',
+        ferramentas: [
+          { nome: 'LangSmith', funcionalidade: 'Observabilidade LLM-específica', url: 'https://www.langchain.com/langsmith' },
+          { nome: 'Phoenix', funcionalidade: 'Observabilidade open-source para LLMs', url: 'https://phoenix.arize.com' },
+          { nome: 'RAGAS', funcionalidade: 'Avaliação de sistemas RAG', url: 'https://github.com/explodinggradients/ragas' },
+        ],
       },
       {
         pergunta: 'Qual stack de observabilidade usar?',
         orientacao: 'Prometheus + Grafana (open), DataDog/New Relic (comercial), LangSmith/Weights&Biases (LLM-specific).',
+        ferramentas: [
+          { nome: 'Prometheus', funcionalidade: 'Monitoramento open-source', url: 'https://prometheus.io' },
+          { nome: 'Grafana', funcionalidade: 'Dashboards customizáveis', url: 'https://grafana.com' },
+          { nome: 'Datadog', funcionalidade: 'Plataforma comercial completa', url: 'https://www.datadoghq.com' },
+          { nome: 'LangFuse', funcionalidade: 'Tracing para aplicações LLM', url: 'https://langfuse.com' },
+        ],
       },
       {
         pergunta: 'Como garantir privacidade nos logs?',
         orientacao: 'Implemente PII masking, log sampling, retenção limitada. Nunca logue prompts completos sem anonimização.',
+        ferramentas: [
+          { nome: 'LangFuse', funcionalidade: 'Logging com PII masking', url: 'https://langfuse.com' },
+        ],
       },
     ],
     entregas: [
@@ -380,18 +502,35 @@ export const macroEtapas = {
       {
         pergunta: 'Qual estratégia de deployment: blue-green, canary ou rolling?',
         orientacao: 'Blue-green: rollback rápido. Canary: teste gradual com % de tráfego. Rolling: sem downtime, mais lento.',
+        ferramentas: [
+          { nome: 'Kubernetes', funcionalidade: 'Orquestração com rolling updates', url: 'https://kubernetes.io' },
+          { nome: 'ArgoCD', funcionalidade: 'GitOps continuous delivery', url: 'https://argo-cd.readthedocs.io' },
+        ],
       },
       {
         pergunta: 'Como testar LLMs automaticamente?',
         orientacao: 'Unit tests para código, integration tests para APIs, eval sets com golden answers, regression tests para qualidade.',
+        ferramentas: [
+          { nome: 'GitHub Actions', funcionalidade: 'CI/CD automatizado', url: 'https://github.com/features/actions' },
+          { nome: 'GitLab CI/CD', funcionalidade: 'Pipeline integrado GitLab', url: 'https://docs.gitlab.com/ee/ci' },
+        ],
       },
       {
         pergunta: 'Qual ferramenta de IaC usar?',
         orientacao: 'Terraform: multi-cloud, maduro. Pulumi: code-first. Cloud-native (CloudFormation, Deployment Manager) para lock-in.',
+        ferramentas: [
+          { nome: 'Terraform', funcionalidade: 'IaC multi-cloud declarativo', url: 'https://www.terraform.io' },
+          { nome: 'Pulumi', funcionalidade: 'IaC com linguagens de programação', url: 'https://www.pulumi.com' },
+        ],
       },
       {
         pergunta: 'Como automatizar retreinamento e atualização de modelos?',
         orientacao: 'Pipelines Airflow/Prefect para retreino periódico, triggers baseados em drift detection, validação automática antes de deploy.',
+        ferramentas: [
+          { nome: 'Apache Airflow', funcionalidade: 'Orquestração de pipelines ML', url: 'https://airflow.apache.org' },
+          { nome: 'Prefect', funcionalidade: 'Workflows modernos de ML', url: 'https://www.prefect.io' },
+          { nome: 'MLflow', funcionalidade: 'Gestão de ciclo de vida ML', url: 'https://mlflow.org' },
+        ],
       },
     ],
     entregas: [

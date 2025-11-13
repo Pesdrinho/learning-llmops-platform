@@ -9,6 +9,8 @@ const Home = lazy(() => import('@pages/Home'));
 const Blog = lazy(() => import('@pages/Blog'));
 const BlogPost = lazy(() => import('@pages/Blog/Post'));
 const Guia = lazy(() => import('@pages/Guia'));
+const Hub = lazy(() => import('@pages/Guia/Hub'));
+const GuideView = lazy(() => import('@pages/Guia/GuideView'));
 const MacroEtapa = lazy(() => import('@pages/Guia/MacroEtapa'));
 const Podcast = lazy(() => import('@pages/Podcast'));
 const Episode = lazy(() => import('@pages/Podcast/Episode'));
@@ -51,8 +53,16 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
+          
+          {/* Rotas de Guias - Novo Hub */}
+          <Route path="/guias" element={<Hub />} />
+          <Route path="/guias/:guiaSlug" element={<GuideView />} />
+          <Route path="/guias/:guiaSlug/:etapa" element={<MacroEtapa />} />
+          
+          {/* Rotas antigas de guia (mantidas para compatibilidade) */}
           <Route path="/guia" element={<Guia />} />
           <Route path="/guia/:etapa" element={<MacroEtapa />} />
+          
           <Route path="/podcast" element={<Podcast />} />
           <Route path="/podcast/:slug" element={<Episode />} />
           <Route path="/sobre" element={<Sobre />} />

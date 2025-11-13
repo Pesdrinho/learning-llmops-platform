@@ -7,22 +7,74 @@ import SEO from '@components/SEO';
 import Container from '@components/layout/Container';
 import Callout from '@components/mdx/Callout';
 import AudienceSection from '@components/AudienceSection';
+import GlossaryTooltip from '@components/GlossaryTooltip';
+import ToolReference from '@components/ToolReference';
+import ExternalContentSection from '@components/ExternalContentSection';
 import { ArrowLeft, ArrowRight, CheckCircle, AlertTriangle } from 'lucide-react';
 import { getEtapaPorSlug } from '@data/guiaEtapas';
 
 /**
+ * Destaca termos do glossário no texto
+ */
+function highlightGlossaryTerms(text) {
+  const glossaryTerms = [
+    'LLMOps', 'RAG', 'Embedding', 'Fine-tuning', 'LoRA', 'QLoRA', 'PEFT',
+    'Hallucination', 'Chunking', 'Vector Database', 'Prompt Engineering',
+    'Token', 'Context Window', 'Agent', 'Observability', 'LGPD', 'GDPR'
+  ];
+  
+  const parts = [];
+  let lastIndex = 0;
+  
+  // Ordena termos por tamanho decrescente para evitar conflitos
+  const sortedTerms = [...glossaryTerms].sort((a, b) => b.length - a.length);
+  
+  sortedTerms.forEach((term) => {
+    const regex = new RegExp(`\\b(${term})\\b`, 'gi');
+    const matches = [...text.matchAll(regex)];
+    
+    matches.forEach((match) => {
+      const index = match.index;
+      if (index >= lastIndex) {
+        if (index > lastIndex) {
+          parts.push(text.slice(lastIndex, index));
+        }
+        parts.push(
+          <GlossaryTooltip key={`${term}-${index}`} term={match[1]}>
+            {match[1]}
+          </GlossaryTooltip>
+        );
+        lastIndex = index + match[1].length;
+      }
+    });
+  });
+  
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+  
+  return parts.length > 0 ? parts : text;
+}
+
+/**
  * Página de macro-etapa individual
+ * Suporta tanto rotas antigas (/guia/etapa) quanto novas (/guias/llmops/etapa)
  */
 export default function MacroEtapa() {
-  const { etapa } = useParams();
+  const { etapa, guiaSlug } = useParams();
 
   // Busca dados da etapa
   const macroEtapa = getEtapaPorSlug(etapa);
 
   // Redireciona se etapa não existe
   if (!macroEtapa) {
-    return <Navigate to="/guia" replace />;
+    const redirectPath = guiaSlug ? `/guias/${guiaSlug}` : '/guias';
+    return <Navigate to={redirectPath} replace />;
   }
+
+  // Define URLs base para navegação
+  const baseUrl = guiaSlug ? `/guias/${guiaSlug}` : '/guia';
+  const indexUrl = guiaSlug ? `/guias/${guiaSlug}` : '/guia';
 
   return (
     <>
@@ -34,9 +86,9 @@ export default function MacroEtapa() {
       <div className="border-b bg-muted/30">
         <Container className="py-8">
           <Button asChild variant="ghost" size="sm" className="mb-6">
-            <Link to="/guia">
+            <Link to={indexUrl}>
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Voltar ao guia
+              Voltar ao {guiaSlug ? 'guia' : 'índice'}
             </Link>
           </Button>
 
@@ -75,7 +127,9 @@ export default function MacroEtapa() {
                   <span className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
                     {index + 1}
                   </span>
-                  <span className="flex-1">{objetivo}</span>
+                  <span className="flex-1">
+                    {highlightGlossaryTerms(objetivo)}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -91,8 +145,29 @@ export default function MacroEtapa() {
                     {item.pergunta}
                   </AccordionTrigger>
                   <AccordionContent>
-                    <div className="rounded-lg bg-muted/50 p-4">
-                      <p className="text-sm">{item.orientacao}</p>
+                    <div className="rounded-lg bg-muted/50 p-4 space-y-3">
+                      <p className="text-sm">{highlightGlossaryTerms(item.orientacao)}</p>
+                      {item.ferramentas && item.ferramentas.length > 0 && (
+                        <div className="pt-3 border-t">
+                          <p className="text-xs font-semibold text-muted-foreground mb-2">
+                            Ferramentas que podem ajudar:
+                          </p>
+                          <div className="space-y-2">
+                            {item.ferramentas.map((ferramenta, idx) => (
+                              <div key={idx} className="flex items-start gap-2">
+                                <ToolReference 
+                                  name={ferramenta.nome} 
+                                  url={ferramenta.url}
+                                  variant="outline"
+                                />
+                                <span className="text-xs text-muted-foreground">
+                                  {ferramenta.funcionalidade}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </AccordionContent>
                 </AccordionItem>
@@ -133,11 +208,16 @@ export default function MacroEtapa() {
             </div>
           </section>
 
+          {/* Conteúdos Externos */}
+          {macroEtapa.conteudosExternos && macroEtapa.conteudosExternos.length > 0 && (
+            <ExternalContentSection contents={macroEtapa.conteudosExternos} />
+          )}
+
           {/* Call to Action */}
           {macroEtapa.proximaEtapa && (
             <Callout type="tip" title="Próxima Etapa">
               Após concluir as entregas desta etapa, avance para:{' '}
-              <Link to={`/guia/${macroEtapa.proximaEtapa.slug}`} className="font-semibold underline">
+              <Link to={`${baseUrl}/${macroEtapa.proximaEtapa.slug}`} className="font-semibold underline">
                 {macroEtapa.proximaEtapa.titulo}
               </Link>
             </Callout>
@@ -146,14 +226,14 @@ export default function MacroEtapa() {
           {/* Navegação */}
           <div className="flex justify-between pt-8 border-t">
             <Button asChild variant="outline">
-              <Link to="/guia">
+              <Link to={indexUrl}>
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Voltar ao índice
               </Link>
             </Button>
             {macroEtapa.proximaEtapa && (
               <Button asChild>
-                <Link to={`/guia/${macroEtapa.proximaEtapa.slug}`}>
+                <Link to={`${baseUrl}/${macroEtapa.proximaEtapa.slug}`}>
                   Próxima etapa
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
@@ -161,7 +241,7 @@ export default function MacroEtapa() {
             )}
             {!macroEtapa.proximaEtapa && (
               <Button asChild variant="default">
-                <Link to="/guia">
+                <Link to={indexUrl}>
                   <CheckCircle className="mr-2 h-4 w-4" />
                   Concluir guia
                 </Link>
