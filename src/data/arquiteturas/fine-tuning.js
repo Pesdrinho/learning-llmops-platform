@@ -3,7 +3,7 @@ export const arquiteturaFineTuning = {
   nome: 'Fine-tuning / SLM Especializado',
   descricao:
     'Arquitetura baseada em ajuste fino de modelos de linguagem para domínios específicos, ideal quando há dados proprietários de qualidade e necessidade de comportamento altamente customizado.',
-  nivel: 'avancado',
+  nivel: 'avançado',
   custoEstimado: 'alto',
   complexidade: 'alta',
   tempoImplementacao: '4-8 semanas',

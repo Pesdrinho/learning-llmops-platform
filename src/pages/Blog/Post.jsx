@@ -7,6 +7,7 @@ import Container from '@components/layout/Container';
 import ReadingProgress from '@components/mdx/ReadingProgress';
 import TableOfContents from '@components/mdx/TableOfContents';
 import Callout from '@components/mdx/Callout';
+import MarkdownContent from '@components/mdx/MarkdownContent';
 import AudienceSection from '@components/AudienceSection';
 import { formatDate } from '@lib/utils';
 import { Calendar, Clock, User, ArrowLeft } from 'lucide-react';
@@ -97,12 +98,8 @@ export default function BlogPost() {
                 />
               )}
 
-              <Callout type="info" title="Conteúdo Placeholder">
-                Este artigo está estruturado e pronto para receber conteúdo. O texto abaixo é temporário
-                e será substituído pelo conteúdo definitivo posteriormente.
-              </Callout>
-
-              <div dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br/>') }} />
+              {/* Conteúdo do Post renderizado com Markdown */}
+              <MarkdownContent content={post.content} />
 
               <Callout type="success">
                 Continue sua jornada explorando nosso{' '}

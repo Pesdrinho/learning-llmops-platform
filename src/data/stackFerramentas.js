@@ -9,6 +9,17 @@ export const stackFerramentas = {
     slug: 'definicao-requisitos',
     titulo: 'Definição dos Requisitos',
     descricao: 'Ferramentas para estratégia, compliance e governança',
+    conteudosExternos: [
+      {
+        type: 'article',
+        title: 'Como estruturar requisitos para projetos de IA',
+        description: 'Guia prático para definir requisitos claros em projetos de inteligência artificial',
+        author: 'Medium - Towards Data Science',
+        url: 'https://towardsdatascience.com/ai-requirements',
+        duration: '8 min',
+        tags: ['requisitos', 'planejamento'],
+      },
+    ],
     ferramentas: [
       {
         nome: 'Confluence',
@@ -50,6 +61,17 @@ export const stackFerramentas = {
     slug: 'preprocessamento-dados',
     titulo: 'Pré-processamento dos Dados',
     descricao: 'Ferramentas para ETL, limpeza e preparação de dados',
+    conteudosExternos: [
+      {
+        type: 'youtube',
+        title: 'Apache Airflow Tutorial Completo',
+        description: 'Tutorial prático sobre como usar Apache Airflow para pipelines de dados',
+        author: 'Data Engineering Academy',
+        url: 'https://www.youtube.com/watch?v=airflow-tutorial',
+        duration: '45 min',
+        tags: ['airflow', 'ETL', 'tutorial'],
+      },
+    ],
     ferramentas: [
       {
         nome: 'Apache Airflow',

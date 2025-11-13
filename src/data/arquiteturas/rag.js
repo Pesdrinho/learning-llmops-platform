@@ -3,9 +3,9 @@ export const arquiteturaRAG = {
   nome: 'RAG - Retrieval-Augmented Generation',
   descricao:
     'Arquitetura que combina recuperação de documentos relevantes com geração de texto por LLM, ideal para sistemas que precisam de contexto específico e atualizado.',
-  nivel: 'intermediario',
-  custoEstimado: 'medio',
-  complexidade: 'media',
+  nivel: 'intermediário',
+  custoEstimado: 'médio',
+  complexidade: 'média',
   tempoImplementacao: '2-4 semanas',
 
   // Nós do diagrama React Flow

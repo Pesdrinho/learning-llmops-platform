@@ -4,6 +4,7 @@ import { Badge } from '@components/ui/badge';
 import { Button } from '@components/ui/button';
 import SEO from '@components/SEO';
 import Container from '@components/layout/Container';
+import ExternalContentSection from '@components/ExternalContentSection';
 import { getTodasEtapasStack } from '@data/stackFerramentas';
 import { ExternalLink, Wrench, Filter } from 'lucide-react';
 
@@ -145,6 +146,16 @@ export default function StackFerramentas() {
                     </Card>
                   ))}
                 </div>
+
+                {/* Conteúdos Externos da Etapa */}
+                {etapa.conteudosExternos && etapa.conteudosExternos.length > 0 && (
+                  <div className="mt-8">
+                    <ExternalContentSection 
+                      contents={etapa.conteudosExternos}
+                      title="Aprenda Mais"
+                    />
+                  </div>
+                )}
               </section>
             );
           })}
