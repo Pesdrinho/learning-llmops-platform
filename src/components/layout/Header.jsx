@@ -24,9 +24,9 @@ export default function Header() {
   const navigation = [
     { name: 'Início', href: '/' },
     { name: 'Blog', href: '/blog' },
-    { name: 'Guia', href: '/guia' },
+    { name: 'Guias', href: '/guias' },
     { name: 'Podcast', href: '/podcast' },
-    { name: 'Stack', href: '/stack-ferramentas' },
+    { name: 'Ferramentas', href: '/stack-ferramentas' },
     { name: 'Sobre', href: '/sobre' },
   ];
 
