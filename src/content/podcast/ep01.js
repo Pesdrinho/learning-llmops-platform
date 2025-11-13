@@ -12,7 +12,7 @@ export const episode = {
     empresa: 'CEIA',
     linkedin: 'https://linkedin.com/in/pedro-ribeiro-fernandes',
   },
-  audioUrl: '/audio/podcasts/Análise_paper_MLOps_Architectures.mp3',
+  audioUrl: '/audio/podcasts/ep01.mp3',
   thumbnail: '/images/podcast/ep01.jpg',
   audiencia: {
     publicoAlvo: 'Iniciantes em LLMOps que buscam entender as arquiteturas de referência em MLOps',
