@@ -10,6 +10,7 @@ import {
   updateProfile,
 } from 'firebase/auth';
 import { auth } from '@lib/firebase';
+import { getCurrentUser } from '@/lib/api';
 
 const AuthContext = createContext({});
 
@@ -23,8 +24,21 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [userRole, setUserRole] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Busca role do usuário do backend
+  const fetchUserRole = async (firebaseUser) => {
+    try {
+      const token = await firebaseUser.getIdToken();
+      const userData = await getCurrentUser(token);
+      setUserRole(userData.role);
+    } catch (error) {
+      console.error('Erro ao buscar role do usuário:', error);
+      setUserRole('user'); // Default
+    }
+  };
 
   useEffect(() => {
     // Verificar se o Firebase está disponível
@@ -34,8 +48,15 @@ export function AuthProvider({ children }) {
       return;
     }
 
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setUser(user);
+      
+      if (user) {
+        await fetchUserRole(user);
+      } else {
+        setUserRole(null);
+      }
+      
       setLoading(false);
     }, (error) => {
       console.error('Erro no AuthStateChanged:', error);
@@ -146,6 +167,7 @@ export function AuthProvider({ children }) {
 
   const value = {
     user,
+    userRole,
     loading,
     error,
     signUp,
@@ -153,6 +175,7 @@ export function AuthProvider({ children }) {
     signInWithGoogle,
     signOut,
     resetPassword,
+    refreshUserRole: () => user && fetchUserRole(user),
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

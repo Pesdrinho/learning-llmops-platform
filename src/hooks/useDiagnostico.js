@@ -32,7 +32,8 @@ export function useDiagnostico(diagnosticoId) {
 
   // Salvar resposta de etapa
   const { mutate: salvarResposta, isPending: salvando } = useMutation({
-    mutationFn: ({ etapa, respostas }) => salvarRespostasEtapa(diagnosticoId, etapa, respostas),
+    mutationFn: ({ etapa, respostas, proximaEtapa }) => 
+      salvarRespostasEtapa(diagnosticoId, etapa, respostas, proximaEtapa),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['diagnostico', diagnosticoId] });
     },
