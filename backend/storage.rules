@@ -1,0 +1,44 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Helper function para verificar autenticação
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function para verificar role
+    function getUserRole() {
+      return firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role;
+    }
+    
+    function isEditor() {
+      return isAuthenticated() && getUserRole() in ['editor', 'admin'];
+    }
+    
+    // Podcasts - Leitura pública, escrita apenas editor/admin
+    match /podcasts/{podcast} {
+      allow read: if true;
+      allow write: if isEditor();
+    }
+    
+    // Imagens - Leitura pública, escrita apenas editor/admin
+    match /images/{allPaths=**} {
+      allow read: if true;
+      allow write: if isEditor();
+    }
+    
+    // Uploads genéricos - Apenas editor/admin
+    match /uploads/{allPaths=**} {
+      allow read: if true;
+      allow write: if isEditor();
+    }
+    
+    // Bloquear acesso a outros paths
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
+

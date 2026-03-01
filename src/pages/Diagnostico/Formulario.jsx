@@ -58,12 +58,24 @@ export default function Formulario() {
   const configFormulario = PERGUNTAS[etapaConfig.id];
   const respostasEtapa = diagnostico.respostas?.[etapaConfig.id] || {};
 
+  // Identifica etapas que já têm respostas
+  const etapasCompletadas = ETAPAS
+    .filter((etapa) => {
+      const respostas = diagnostico.respostas?.[etapa.id];
+      return respostas && Object.keys(respostas).length > 0;
+    })
+    .map((etapa) => etapa.ordem);
+
   const handleProxima = async (respostas) => {
     try {
-      // Salvar respostas da etapa atual
+      // Determina a próxima etapa
+      const proximaEtapa = etapaAtual === ETAPAS.length ? etapaAtual : etapaAtual + 1;
+
+      // Salvar respostas da etapa atual e atualizar etapaAtual no Firestore
       await salvarResposta({
         etapa: etapaConfig.id,
         respostas,
+        proximaEtapa,
       });
 
       // Se é a última etapa, finalizar e ir para resultado
@@ -71,8 +83,8 @@ export default function Formulario() {
         await finalizar();
         navigate(`/diagnostico/${id}/resultado`);
       } else {
-        // Senão, avançar para próxima etapa
-        setEtapaAtual((prev) => prev + 1);
+        // Senão, avançar para próxima etapa localmente
+        setEtapaAtual(proximaEtapa);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     } catch (error) {
@@ -89,6 +101,14 @@ export default function Formulario() {
     }
   };
 
+  const handleEtapaClick = (etapaNum) => {
+    // Permite navegar para qualquer etapa já respondida ou a próxima
+    if (etapaNum <= etapaAtual) {
+      setEtapaAtual(etapaNum);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   return (
     <>
       <SEO
@@ -99,7 +119,12 @@ export default function Formulario() {
       <Container className="py-12">
         <div className="max-w-3xl mx-auto space-y-8">
           {/* Progresso */}
-          <FormProgress atual={etapaAtual} total={ETAPAS.length} />
+          <FormProgress 
+            atual={etapaAtual} 
+            total={ETAPAS.length}
+            etapasCompletadas={etapasCompletadas}
+            onEtapaClick={handleEtapaClick}
+          />
 
           {/* Formulário da etapa */}
           <Card className="p-6">

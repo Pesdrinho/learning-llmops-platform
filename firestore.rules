@@ -11,11 +11,23 @@ service cloud.firestore {
       return isAuthenticated() && request.auth.uid == userId;
     }
     
+    function getUserRole() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
+    }
+    
+    function isEditor() {
+      return isAuthenticated() && getUserRole() in ['editor', 'admin'];
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && getUserRole() == 'admin';
+    }
+    
     // Users collection
     match /users/{userId} {
-      allow read: if isOwner(userId);
+      allow read: if isOwner(userId) || isAdmin();
       allow create: if isAuthenticated() && request.auth.uid == userId;
-      allow update: if isOwner(userId);
+      allow update: if isOwner(userId) || isAdmin();
       allow delete: if false; // Nunca permitir delete direto
       
       // Subcollection: profile
@@ -32,12 +44,28 @@ service cloud.firestore {
       allow delete: if isOwner(resource.data.userId);
     }
     
-    // Diagramas de usuário (Fase 4 preparação)
+    // Diagramas de usuário
     match /diagramas_usuario/{diagramaId} {
       allow read: if isOwner(resource.data.userId);
       allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
       allow update: if isOwner(resource.data.userId);
       allow delete: if isOwner(resource.data.userId);
+    }
+    
+    // Blog posts - Leitura pública, escrita apenas editor/admin
+    match /blog_posts/{postId} {
+      allow read: if true; // Leitura pública
+      allow create: if isEditor();
+      allow update: if isEditor();
+      allow delete: if isAdmin();
+    }
+    
+    // Podcasts - Leitura pública, escrita apenas editor/admin
+    match /podcasts/{podcastId} {
+      allow read: if true; // Leitura pública
+      allow create: if isEditor();
+      allow update: if isEditor();
+      allow delete: if isAdmin();
     }
     
     // Bloquear acesso a outras collections não especificadas

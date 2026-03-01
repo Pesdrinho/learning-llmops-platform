@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Layout from '@components/layout/Layout';
 import ProtectedRoute from '@components/ProtectedRoute';
+import AdminRoute from '@components/AdminRoute';
 import { Skeleton } from '@components/ui/skeleton';
 
 // Lazy loading de páginas para melhor performance
@@ -30,6 +31,12 @@ const Privacy = lazy(() => import('@pages/Privacy'));
 const Cookies = lazy(() => import('@pages/Cookies'));
 const Terms = lazy(() => import('@pages/Terms'));
 const NotFound = lazy(() => import('@pages/NotFound'));
+
+// Admin páginas
+const AdminDashboard = lazy(() => import('@pages/Admin'));
+const BlogEditor = lazy(() => import('@pages/Admin/BlogEditor'));
+const PodcastEditor = lazy(() => import('@pages/Admin/PodcastEditor'));
+const UsersManager = lazy(() => import('@pages/Admin/UsersManager'));
 
 // Loading fallback
 function PageLoader() {
@@ -129,6 +136,56 @@ function App() {
               <ProtectedRoute>
                 <Laboratorio />
               </ProtectedRoute>
+            }
+          />
+
+          {/* Rotas Admin (apenas editor/admin) */}
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute requiredRole="editor">
+                <AdminDashboard />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/blog"
+            element={
+              <AdminRoute requiredRole="editor">
+                <BlogEditor />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/blog/:id"
+            element={
+              <AdminRoute requiredRole="editor">
+                <BlogEditor />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/podcasts"
+            element={
+              <AdminRoute requiredRole="editor">
+                <PodcastEditor />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/podcasts/:id"
+            element={
+              <AdminRoute requiredRole="editor">
+                <PodcastEditor />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/users"
+            element={
+              <AdminRoute requiredRole="admin">
+                <UsersManager />
+              </AdminRoute>
             }
           />
 

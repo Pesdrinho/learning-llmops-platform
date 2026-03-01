@@ -8,7 +8,8 @@ import {
   DropdownMenuTrigger,
 } from '@components/ui/dropdown-menu';
 import { useAuth } from '@/contexts/AuthContext';
-import { Menu, X, User, LogOut, FlaskConical, ChevronDown } from 'lucide-react';
+import { useRole } from '@/hooks/useRole';
+import { Menu, X, User, LogOut, FlaskConical, ChevronDown, Settings } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 /**
@@ -17,6 +18,7 @@ import { motion, AnimatePresence } from 'framer-motion';
  */
 export default function Header() {
   const { user, signOut } = useAuth();
+  const { canManageContent } = useRole();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [labDropdownOpen, setLabDropdownOpen] = useState(false);
 
@@ -96,6 +98,14 @@ export default function Header() {
                 <User className="mr-1 inline h-4 w-4" />
                 {user.displayName || user.email}
               </span>
+              {canManageContent() && (
+                <Button variant="outline" size="sm" asChild>
+                  <Link to="/admin">
+                    <Settings className="mr-2 h-4 w-4" />
+                    Admin
+                  </Link>
+                </Button>
+              )}
               <Button variant="outline" size="sm" onClick={handleSignOut}>
                 <LogOut className="mr-2 h-4 w-4" />
                 Sair
@@ -165,6 +175,16 @@ export default function Header() {
                     <div className="px-3 py-2 text-sm text-muted-foreground">
                       {user.displayName || user.email}
                     </div>
+                    {canManageContent() && (
+                      <Link
+                        to="/admin"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="block rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-primary"
+                      >
+                        <Settings className="mr-2 inline h-4 w-4" />
+                        Admin
+                      </Link>
+                    )}
                     <button
                       onClick={handleSignOut}
                       className="w-full rounded-md px-3 py-2 text-left text-sm font-medium text-muted-foreground hover:bg-muted hover:text-primary"

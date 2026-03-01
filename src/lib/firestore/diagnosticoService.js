@@ -124,14 +124,21 @@ export async function updateDiagnostico(diagnosticoId, dados) {
 /**
  * Atualiza respostas de uma etapa específica
  */
-export async function salvarRespostasEtapa(diagnosticoId, nomeEtapa, respostas) {
+export async function salvarRespostasEtapa(diagnosticoId, nomeEtapa, respostas, proximaEtapa = null) {
   try {
     const diagnosticoRef = doc(db, COLLECTION_NAME, diagnosticoId);
 
-    await updateDoc(diagnosticoRef, {
+    const updateData = {
       [`respostas.${nomeEtapa}`]: respostas,
       updatedAt: serverTimestamp(),
-    });
+    };
+
+    // Se forneceu proximaEtapa, atualiza também
+    if (proximaEtapa !== null) {
+      updateData.etapaAtual = proximaEtapa;
+    }
+
+    await updateDoc(diagnosticoRef, updateData);
 
     return diagnosticoId;
   } catch (error) {
